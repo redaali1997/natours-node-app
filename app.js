@@ -11,8 +11,11 @@ app.use((req, res, next) => {
   next();
 });
 
-app
-  .route("/api/v1/tours")
+const tourRouter = express.Router();
+app.use("/api/v1/tours", tourRouter);
+
+tourRouter
+  .route("/")
   .get((req, res) => {
     res.status(200).json({
       status: "success",
@@ -27,13 +30,12 @@ app
     });
   });
 
-app.get("/api/v1/tours/:id", (req, res) => {
+tourRouter.get("/:id", (req, res) => {
   res.status(200).json({
     status: "success",
     tours: `one tour ${req.params.id}`,
   });
 });
-
 
 const port = 3000;
 app.listen(port, () => {
