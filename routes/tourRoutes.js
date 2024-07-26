@@ -1,17 +1,19 @@
 const express = require("express");
 const tourController = require("./../controllers/tourController");
 
-const tourRouter = express.Router();
+const router = express.Router();
 
-tourRouter
-  .route("/")
-  .get(tourController.getTours)
-  .post(tourController.createTour);
+router.param("id", (req, res, next, val) => {
+  console.log("Id is: " + val);
+  next();
+});
 
-tourRouter
+router.route("/").get(tourController.getTours).post(tourController.checkBody, tourController.createTour);
+
+router
   .route("/:id")
   .get(tourController.getTour)
   .patch(tourController.updateTour)
   .delete(tourController.deleteTour);
 
-module.exports = tourRouter;
+module.exports = router;
