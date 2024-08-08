@@ -1,11 +1,15 @@
 const express = require("express");
 const morgan = require("morgan");
-const tourRouter = require('./routes/tourRoutes')
+const tourRouter = require("./routes/tourRoutes");
 
 const app = express();
 
+if (process.env.NODE_ENV == "dev") {
+  app.use(morgan("dev"));
+}
+
 app.use(express.json());
-app.use(morgan("dev"));
+app.use(express.static("./public"));
 
 app.use((req, res, next) => {
   req.requestTime = new Date().toISOString();
@@ -14,4 +18,4 @@ app.use((req, res, next) => {
 
 app.use("/api/v1/tours", tourRouter);
 
-module.exports = app
+module.exports = app;
