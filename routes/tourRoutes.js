@@ -8,7 +8,10 @@ router.param("id", (req, res, next, val) => {
   next();
 });
 
-router.route("/").get(tourController.getTours).post(tourController.checkBody, tourController.createTour);
+router
+  .route("/")
+  .get(tourController.getTours)
+  .post(tourController.checkBody, tourController.createTour);
 
 router
   .route("/:id")
